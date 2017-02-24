@@ -22,10 +22,11 @@ function handleContractEvent(err, contract) {
 
 function deploy(source) {
     const compiled = web3.eth.compile.solidity(source.replace(/\n/g, ""));
-    const HelloContract = web3.eth.contract(compiled.hello.info.abiDefinition);
+    contractData = (compiled.hello || compiled['<stdin>:hello']); // after upgrading geth suddenly the key was '<stdin>:hello' instead of just 'hello'
+    const HelloContract = web3.eth.contract(contractData.info.abiDefinition);
     HelloContract.new({
         from: web3.eth.coinbase,
-        data: compiled.hello.code,
+        data: contractData.code,
         gas: 3e5
     }, handleContractEvent);
 }
