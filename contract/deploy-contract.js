@@ -27,7 +27,7 @@ function deploy(source) {
     HelloContract.new({
         from: web3.eth.coinbase,
         data: contractData.code,
-        gas: 3e5
+        gas: 3e6
     }, handleContractEvent);
 }
 
